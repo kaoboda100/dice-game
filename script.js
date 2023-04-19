@@ -1,88 +1,65 @@
-'use strict';
-
-// selecting elements
-const player00 = document.querySelector('.player--0')
-const player01 = document.querySelector('.player--1')
-const score0El = document.querySelector('#score--0');
-const score1El = document.getElementById('score--1');
-// const current0El = document.getElementById('current--0');
-// const current1El = document.getElementById('current--1');
-const diceEl = document.querySelector('.dice');
-const btnNew = document.querySelector('.btn--new')
-const btnRoll = document.querySelector('.btn--roll')
-const btnHold = document.querySelector('.btn--hold')
-
-const score = [0,0];
-let current = 0;
-let activeplayer =0;
-let play = true
-
-const switchPlayer = () => { // tạo hàm thay đổi người chơi
+//Generating Variable Element
+const player0 = document.querySelector('.player--0');
+const player1 = document.querySelector('.player--1');
+//Generating Button Variable
+const btnRoll = document.querySelector('.btn--roll');    //1
+const btnHold = document.querySelector('.btn--hold');    //2
+const btnNew = document.querySelector('.btn--new');     //3
+//Generating assign Variable
+let current , score , activeplayer ,play;
+//Generating Function
+//Function #1
+const gameDefault = () => {
     current = 0;
-    document.getElementById(`current--${activeplayer}`).textContent = current; // trả điểm người chơi lại = 0
-    activeplayer = activeplayer === 0 ? 1 : 0; // 
-    player00.classList.toggle('player--active') // toggle ở đây sẽ kiểm tra .class trong element nếu có thì xóa không thì add
-    player01.classList.toggle('player--active')
-}
-diceEl.classList.add('hidden') // hide the dice
-score0El.textContent = 0 // cho điểm cơ bản = 0
-score1El.textContent = 0 
-
-btnRoll.addEventListener('click', function(){ // tạo sự kiện click chuột với btnRoll
-    if(play) {
-        //1 . generate random number
-        let rolldice = Math.trunc(Math.random()*6)+1 
-    
-        //2 . display dice
-        diceEl.classList.remove('hidden')
-        diceEl.src = `dice-${rolldice}.png`; // dùng src để đưa hình ảnh vào 
-
-        //3 if rolled to 1
-        if(rolldice !== 1) { //  kết quả dice không phải 1 
-        current +=rolldice; // điểm hiện tại cộng dồn với dice
-        document.getElementById(`current--${activeplayer}`)
-            .textContent = current; // display current score of an activeplayer
-        }else {
-        switchPlayer()   
-        }
-    }
-})
-
-btnHold.addEventListener('click', function (){
-    if (play) {
-        score[activeplayer] += current;    // score của người chơi hiện tại = + dồn của current
-        if (score[activeplayer] >= 100) { // set winner 
-        play = false;
-        diceEl.classList.add('hidden') // hide the dice
-
-        document.querySelector(`.player--${activeplayer}`)
-            .classList.add('player--winner');               // change color winner
-        document.querySelector(`#score--${activeplayer}`)
-            .textContent = score[activeplayer];             // display score 
-        } else
-        document.querySelector(`#score--${activeplayer}`)
-            .textContent = score[activeplayer]; // display score 
-        switchPlayer()
-    }
-})
-
-btnNew.addEventListener('click', function (){
+    score = [0,0];
+    activeplayer = 0;
     play = true;
-    score[1] = 0;// cho điểm cơ bản = 0
-    score[0] = 0;
-    score0El.textContent = score[0]
-    score1El.textContent = score[0]
-    if (player01.classList.contains('player--active')) switchPlayer();
-    if (player00.classList.contains('player--winner')) {
-        player00.classList.remove('player--winner'); // change color winner
-    } else if (player01.classList.contains('player--winner')) {
-        player01.classList.remove('player--winner');
+    document.querySelector('.dice').classList.add('hidden');
+    document.querySelector('#current--0').textContent = current;;
+    document.querySelector('#current--1').textContent = current;
+    document.querySelector('#score--0').textContent = score[0];
+    document.querySelector('#score--1').textContent = score[1];
+    player0.classList.remove('player--winner');
+    player1.classList.remove('player--winner');
+    if (player1.classList.contains('player--active'))switchPlayer();
+}
+//Function #2
+const switchPlayer = () => {
+    current = 0
+    document.querySelector(`#current--${activeplayer}`).textContent = current;;
+    activeplayer = activeplayer === 0 ? 1 : 0;
+    player0.classList.toggle('player--active')
+    player1.classList.toggle('player--active')
+    document.querySelector('.dice').classList.add('hidden');
+
+}
+//Calling Function
+gameDefault();
+
+//Generating Roll Dice Button
+btnRoll.addEventListener('click',function(){
+   if(play) {
+        let diceNumber = Math.trunc(Math.random()*6)+1
+        document.querySelector('.dice').src = `dice-${diceNumber}.png`
+        document.querySelector('.dice').classList.remove('hidden');
+        if(diceNumber !== 1){
+        current += diceNumber;
+        document.querySelector(`#current--${activeplayer}`).textContent = current;
+        }else switchPlayer()
+    } 
+})
+//Generating Hold Score Button
+btnHold.addEventListener('click',function () {
+    if(play) {
+        score[activeplayer] += current;
+        document.querySelector(`#score--${activeplayer}`).textContent= score[activeplayer];
+        if (score[activeplayer] >= 100) {
+        play = false;
+        document.querySelector(`.player--${activeplayer}`).classList.add('player--winner')
+        document.querySelector(`#current--${activeplayer}`).textContent = 0;
+        document.querySelector('.dice').classList.add('hidden');
+        } else switchPlayer()
     }
 })
-
-
-
-
-
-
-
+//Generating New Game Button
+btnNew.addEventListener('click',gameDefault);
