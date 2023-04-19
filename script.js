@@ -30,7 +30,8 @@ const switchPlayer = () => {
     activeplayer = activeplayer === 0 ? 1 : 0;
     player0.classList.toggle('player--active')
     player1.classList.toggle('player--active')
-    
+    document.querySelector('.dice').classList.add('hidden');
+
 }
 //Calling Function
 gameDefault();
@@ -57,9 +58,7 @@ btnHold.addEventListener('click',function () {
         document.querySelector(`.player--${activeplayer}`).classList.add('player--winner')
         document.querySelector(`#current--${activeplayer}`).textContent = 0;
         document.querySelector('.dice').classList.add('hidden');
-        } else {
-            switchPlayer()
-            document.querySelector('.dice').classList.add('hidden');
+        } else switchPlayer()
     }
 })
 //Generating New Game Button
