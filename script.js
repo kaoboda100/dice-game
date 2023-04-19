@@ -51,7 +51,7 @@ btnRoll.addEventListener('click', function(){ // tạo sự kiện click chuột
 btnHold.addEventListener('click', function (){
     if (play) {
         score[activeplayer] += current;    // score của người chơi hiện tại = + dồn của current
-        if (score[activeplayer] >= 50) { // set winner 
+        if (score[activeplayer] >= 100) { // set winner 
         play = false;
         diceEl.classList.add('hidden') // hide the dice
 
