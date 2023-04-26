@@ -58,7 +58,11 @@ btnHold.addEventListener('click',function () {
         document.querySelector(`.player--${activeplayer}`).classList.add('player--winner')
         document.querySelector(`#current--${activeplayer}`).textContent = 0;
         document.querySelector('.dice').classList.add('hidden');
-        } else switchPlayer()
+        } else {
+            switchPlayer();
+            document.querySelector('.dice').classList.add('hidden');
+            
+        }
     }
 })
 //Generating New Game Button
