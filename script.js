@@ -25,12 +25,12 @@ const gameDefault = () => {
 }
 //Function #2
 const switchPlayer = () => {
-    current = 0
-    document.querySelector(`#current--${activeplayer}`).textContent = current;;
+    current = 0;
+    document.querySelector(`#current--${activeplayer}`).textContent = current;
     activeplayer = activeplayer === 0 ? 1 : 0;
-    player0.classList.toggle('player--active')
-    player1.classList.toggle('player--active')
-    document.querySelector('.dice').classList.add('hidden');
+    player0.classList.toggle('player--active');
+    player1.classList.toggle('player--active');
+  
 
 }
 //Calling Function
